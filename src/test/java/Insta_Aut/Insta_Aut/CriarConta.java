@@ -157,7 +157,7 @@ public class CriarConta {
 		frame.getContentPane().add(btnVoltar);
 	}
 	private void jButton1ActionPerformed(ActionEvent evt) throws IOException, InterruptedException, InstantiationException, IllegalAccessException{
-		teste t = new teste();
+		CriaConta t = new CriaConta();
 		PegandoDad p = new PegandoDad();
 		dados d = new dados();
 		if (rdbtnMasculino.isSelected()) {

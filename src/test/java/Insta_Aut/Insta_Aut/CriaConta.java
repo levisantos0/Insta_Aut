@@ -22,7 +22,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 @RunWith(Parameterized.class)
-public class teste {
+public class CriaConta {
 	public int Random() {
 
 		final int min = Math.min(1, 3);
