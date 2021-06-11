@@ -13,7 +13,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-public class CriarConta {
+public class CC_addFotosTela {
 
 	JFrame frame;
 	private JLabel labelNome;
@@ -24,6 +24,7 @@ public class CriarConta {
 	private final JRadioButton rdbtnMasculino = new JRadioButton("Masculino");
 	private JRadioButton rdbtnFeminino = new JRadioButton("Feminino");
 	private JButton btnVoltar;
+	private JTextField textField_Fotos;
 
 	/**
 	 * Launch the application.
@@ -43,7 +44,7 @@ public class CriarConta {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CriarConta window = new CriarConta();
+					CC_addFotosTela window = new CC_addFotosTela();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,59 +55,60 @@ public class CriarConta {
 
 	/**
 	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
-	public CriarConta() {
+	public CC_addFotosTela() {
 		frame = new JFrame();
-		frame.setBounds(600, 350, 334, 257);
+		frame.setBounds(600, 350, 334, 339);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(true);
 		frame.setTitle("Criar contas");
-		
+
 		JLabel lblTelefone = new JLabel("Telefone:");
 		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblTelefone.setBounds(10, 11, 68, 25);
 		frame.getContentPane().add(lblTelefone);
-		
+
 		labelNome = new JLabel("O nome será gerado automaticamente");
 		labelNome.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		labelNome.setBounds(10, 55, 269, 25);
 		frame.getContentPane().add(labelNome);
-		
+
 		lblOUsurioSer = new JLabel("O usuário será gerado automaticamente");
 		lblOUsurioSer.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblOUsurioSer.setBounds(10, 108, 269, 25);
 		frame.getContentPane().add(lblOUsurioSer);
-		
+
 		lblSenha = new JLabel("Senha:");
 		lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblSenha.setBounds(10, 144, 51, 25);
 		frame.getContentPane().add(lblSenha);
-		
+
 		textField_Telefone = new JTextField();
 		textField_Telefone.setBounds(75, 11, 205, 29);
 		frame.getContentPane().add(textField_Telefone);
 		textField_Telefone.setColumns(10);
-		
+
 		JButton btnIniciar = new JButton("Iniciar");
 		btnIniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-					try {
-						jButton1ActionPerformed(evt);
-					} catch (IOException | InterruptedException | InstantiationException | IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				try {
+					jButton1ActionPerformed(evt);
+				} catch (IOException | InterruptedException | InstantiationException | IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		btnIniciar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnIniciar.setBounds(58, 180, 96, 29);
+		btnIniciar.setBounds(58, 258, 96, 29);
 		frame.getContentPane().add(btnIniciar);
-		
+
 		passwordField_senha = new JPasswordField();
 		passwordField_senha.setBounds(58, 145, 205, 26);
 		frame.getContentPane().add(passwordField_senha);
-		
+
 		JLabel lblSexo = new JLabel("Sexo:");
 		lblSexo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblSexo.setBounds(10, 83, 46, 25);
@@ -114,7 +116,7 @@ public class CriarConta {
 		rdbtnMasculino.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (rdbtnMasculino.isSelected()) {
-					rdbtnFeminino.setSelected(false);				
+					rdbtnFeminino.setSelected(false);
 				}
 			}
 		});
@@ -124,14 +126,14 @@ public class CriarConta {
 		rdbtnFeminino.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (rdbtnFeminino.isSelected()) {
-					rdbtnMasculino.setSelected(false);				
+					rdbtnMasculino.setSelected(false);
 				}
 			}
 		});
-		
+
 		rdbtnFeminino.setBounds(142, 80, 76, 31);
 		frame.getContentPane().add(rdbtnFeminino);
-		
+
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -139,29 +141,41 @@ public class CriarConta {
 				p.frame.setVisible(true);
 				frame.dispose();
 			}
-			
+
 		});
 		btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnVoltar.setBounds(167, 180, 96, 29);
+		btnVoltar.setBounds(164, 258, 96, 29);
 		frame.getContentPane().add(btnVoltar);
+		
+		JLabel lblPastaDasFotos = new JLabel("Pasta das Fotos:");
+		lblPastaDasFotos.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblPastaDasFotos.setBounds(10, 182, 120, 25);
+		frame.getContentPane().add(lblPastaDasFotos);
+		
+		textField_Fotos = new JTextField();
+		textField_Fotos.setColumns(10);
+		textField_Fotos.setBounds(58, 218, 205, 29);
+		frame.getContentPane().add(textField_Fotos);
 	}
-	private void jButton1ActionPerformed(ActionEvent evt) throws IOException, InterruptedException, InstantiationException, IllegalAccessException{
-		CriaConta t = new CriaConta();
+
+	private void jButton1ActionPerformed(ActionEvent evt)
+			throws IOException, InterruptedException, InstantiationException, IllegalAccessException {
+		CC_addFotos t = new CC_addFotos();
 		PegandoDad p = new PegandoDad();
 		dados d = new dados();
 		String userdir = System.getProperty("user.dir");
 		if (rdbtnMasculino.isSelected()) {
 			d.setNome(p.masculino());
-			d.setPasta(userdir+"\\Feminino");
+			d.setPasta(userdir+"\\Masculino");
 
 		} else if (rdbtnFeminino.isSelected()) {
 			d.setNome(p.feminino());
-			d.setPasta(userdir+"\\Masculino");
+			d.setPasta(userdir+"\\Feminino");
 		}
 
 		d.setTel_Email(textField_Telefone.getText());
 		d.setSenha(String.copyValueOf(passwordField_senha.getPassword()));
-
+		d.setPasta_fotos(textField_Fotos.getText());		
 		t.test(d);
 	}
 }

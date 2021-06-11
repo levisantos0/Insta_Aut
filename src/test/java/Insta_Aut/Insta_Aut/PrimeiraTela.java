@@ -43,7 +43,7 @@ public class PrimeiraTela {
 	 */
 	public PrimeiraTela() {
 		frame = new JFrame();
-		frame.setBounds(600, 350, 217, 195);
+		frame.setBounds(600, 350, 263, 235);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Home");
@@ -56,7 +56,7 @@ public class PrimeiraTela {
 				frame.dispose();
 			}
 		});
-		btnNewButton.setBounds(43, 34, 114, 23);
+		btnNewButton.setBounds(66, 20, 114, 23);
 		frame.getContentPane().add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("Adicionar fotos");
@@ -67,7 +67,40 @@ public class PrimeiraTela {
 				frame.dispose();
 			}
 		});
-		btnNewButton_1.setBounds(43, 68, 114, 23);
+		btnNewButton_1.setBounds(66, 54, 114, 23);
 		frame.getContentPane().add(btnNewButton_1);
+		
+		JButton btnCriarContaSem = new JButton("Criar conta sem o 'Mensagens'");
+		btnCriarContaSem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CC_SemMensagens_Tela cc = new CC_SemMensagens_Tela();
+				cc.frame.setVisible(true);
+				frame.dispose();				
+			}
+		});
+		btnCriarContaSem.setBounds(20, 123, 209, 23);
+		frame.getContentPane().add(btnCriarContaSem);
+		
+		JButton btnCriarContaadd = new JButton("Criar conta + Add fotos");
+		btnCriarContaadd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CC_addFotosTela cc = new CC_addFotosTela();
+				cc.frame.setVisible(true);
+				frame.dispose();	
+			}
+		});
+		btnCriarContaadd.setBounds(20, 89, 209, 23);
+		frame.getContentPane().add(btnCriarContaadd);
+		
+		JButton btnCriarContaSem_1 = new JButton("CC sem o 'Mensagens' + add fotos");
+		btnCriarContaSem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CC_addFotos_Sem_Mensagens_Tela cc = new CC_addFotos_Sem_Mensagens_Tela();
+				cc.frame.setVisible(true);
+				frame.dispose();	
+			}
+		});
+		btnCriarContaSem_1.setBounds(10, 157, 226, 23);
+		frame.getContentPane().add(btnCriarContaSem_1);
 	}
 }

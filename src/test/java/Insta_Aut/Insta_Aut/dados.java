@@ -1,7 +1,7 @@
 package Insta_Aut.Insta_Aut;
 
 public class dados {
-	private String tel_Email, nome, usuario, senha, pasta;
+	private String tel_Email, nome, usuario, senha, pasta, pasta_fotos;
 
 	public String getTel_Email() {
 		return tel_Email;
@@ -42,6 +42,14 @@ public class dados {
 
 	public void setPasta(String pasta) {
 		this.pasta = pasta;
+	}
+
+	public String getPasta_fotos() {
+		return pasta_fotos;
+	}
+
+	public void setPasta_fotos(String pasta_fotos) {
+		this.pasta_fotos = pasta_fotos;
 	}
 
 }

@@ -13,7 +13,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-public class CriarConta {
+public class CC_SemMensagens_Tela {
 
 	JFrame frame;
 	private JLabel labelNome;
@@ -43,7 +43,7 @@ public class CriarConta {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CriarConta window = new CriarConta();
+					CC_SemMensagens_Tela window = new CC_SemMensagens_Tela();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,9 +55,9 @@ public class CriarConta {
 	/**
 	 * Create the application.
 	 */
-	public CriarConta() {
+	public CC_SemMensagens_Tela() {
 		frame = new JFrame();
-		frame.setBounds(600, 350, 334, 257);
+		frame.setBounds(600, 350, 334, 259);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(true);
@@ -142,11 +142,11 @@ public class CriarConta {
 			
 		});
 		btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnVoltar.setBounds(167, 180, 96, 29);
+		btnVoltar.setBounds(164, 180, 96, 29);
 		frame.getContentPane().add(btnVoltar);
 	}
 	private void jButton1ActionPerformed(ActionEvent evt) throws IOException, InterruptedException, InstantiationException, IllegalAccessException{
-		CriaConta t = new CriaConta();
+		CriaConta_SemMensagens t = new CriaConta_SemMensagens();
 		PegandoDad p = new PegandoDad();
 		dados d = new dados();
 		String userdir = System.getProperty("user.dir");

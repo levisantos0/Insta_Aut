@@ -2,7 +2,6 @@ package Insta_Aut.Insta_Aut;
 
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -12,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -22,7 +20,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 @RunWith(Parameterized.class)
-public class CriaConta {
+public class CriaConta_SemMensagens {
 	public int Random() {
 
 		final int min = Math.min(1, 3);
@@ -44,7 +42,6 @@ public class CriaConta {
 	@Test
 	
 	
-	
 	public void test(dados d) {
 		
 		try {
@@ -57,18 +54,8 @@ public class CriaConta {
 		navegador.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
 		String senha = d.getSenha();
 
-		navegador.get("https://messages.google.com/web/conversations?hl=pt-BR");
-		navegador.findElement(By.cssSelector("#mat-slide-toggle-1 > label > div")).click();
-		
-		
 		WebDriverWait wait = new WebDriverWait(navegador, 300); // Espera 10 minutos para colocar o web message
-		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(
-				"/html/body/mw-app/mw-bootstrap/div/main/mw-main-container/div/mw-main-nav/div/mw-fab-link/a/span[1]/div[2]")));
-		
-		((JavascriptExecutor) navegador).executeScript("window.open('about:blank', '_blank');"); // abre nova aba
 
-		ArrayList<String> tabs2 = new ArrayList<String>(navegador.getWindowHandles());
-		navegador.switchTo().window(tabs2.get(1));
 		navegador.get("http://www.instagram.com/accounts/emailsignup/?hl=pt-br");
 		
 		navegador.findElement(By.name("emailOrPhone")).sendKeys(d.getTel_Email()); // Digita o telefone
@@ -81,7 +68,7 @@ public class CriaConta {
 				.sendKeys(senha); // Digita a senha
 		navegador.findElement(By.xpath("/html/body/div[1]/section/main/div/div/div[1]/div/form/div[7]/div/button"))
 				.click(); // Clica em cadastre-se
-
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("/html/body/div[1]/section/main/div/div/div[1]/div/div[6]/button")));
 		switch (this.Random()) { // Gera uma data
 		case 1:
 			navegador.findElement(By.xpath(
@@ -111,30 +98,7 @@ public class CriaConta {
 		navegador.findElement(By.xpath("/html/body/div[1]/section/main/div/div/div[1]/div/div[6]/button")).click(); // Clica para cadastrar e espera a chegada código (sms)
 
 		
-		
-		
-		
-		// ------- pega o código de verificação (sms)
-		navegador.switchTo().window(tabs2.get(0)); // vai pra guia do google messagens
-		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.partialLinkText("para verificar a conta do Instagram."))); //espera uma mensagem que contenha no texto "para verificar a conta do Instagram."
-
-		navegador.findElement(By.partialLinkText("para verificar a conta do Instagram.")).click(); //Clica na mensagem
-		String msg = navegador.findElement(By.partialLinkText("para verificar a conta do Instagram.")).getText(); //Pega o texto da mensagem
-		String cod = msg.replaceAll("[^0-9]", "").substring(5,11); // Tira as letras e deixa só os números
-		navegador.findElement(By.xpath("/html/body/mw-app/mw-bootstrap/div/main/mw-main-container/div/mw-conversation-container/div/div[1]/div/mws-messages-list/mws-bottom-anchored/div/div/div/mws-message-wrapper/div/div/div/mws-message-part-router/mws-text-message-part/div/div/mws-message-part-content/div/div")).click();
-		navegador.findElement(By.className("msg-action-menu-icon")).click();
-		navegador.findElement(By.xpath("/html/body/div[5]/div[2]/div/div/div/div/button[2]")).click();
-		navegador.findElement(By.xpath("/html/body/div[5]/div[2]/div/mat-dialog-container/mws-dialog/div/mat-dialog-actions/button[2]/span[1]")).click(); // Apaga a mensagem
-		
-		// ---------------------------------------------------------
-		
-
-		navegador.switchTo().window(tabs2.get(1)); // Volta para a guia do insta
-		
-		navegador.findElement(By.name("confirmationCode")).sendKeys(cod);
-		navegador.findElement(By.xpath("/html/body/div[1]/section/main/div/div/div[1]/div/div/div/form/div[2]/button")).click();
-		
-		//--------------------------
+				//--------------------------
 		//------ Tirando o telefone e colocando um email aleatório
 		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("/html/body/div[4]/div/div/div/div[3]/button[2]")));//Espera o botão 'agora não'
 		navegador.findElement(By.xpath("/html/body/div[4]/div/div/div/div[3]/button[2]")).click(); // Agora não
@@ -194,6 +158,7 @@ public class CriaConta {
 		navegador.findElement(By.xpath("/html/body/div[1]/section/main/div/article/form/div[10]/div/div/button")).click();// Clica para salvar
 		
 		
+		
 		//---- Salvando usuário e senha
 		String userdir = System.getProperty("user.dir");
 		FileOutputStream arquivo = new FileOutputStream(userdir+"\\senhas.txt", true);
@@ -207,6 +172,7 @@ public class CriaConta {
 		//-----------------
 
 		//navegador.close();
+		
 		JOptionPane.showMessageDialog(null, "Conta criada com sucesso!");		
 		
 		}catch(Exception e ){

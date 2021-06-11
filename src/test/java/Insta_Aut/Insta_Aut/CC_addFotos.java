@@ -1,28 +1,32 @@
 package Insta_Aut.Insta_Aut;
 
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JOptionPane;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-@RunWith(Parameterized.class)
-public class CriaConta {
+public class CC_addFotos {
 	public int Random() {
 
 		final int min = Math.min(1, 3);
@@ -40,10 +44,7 @@ public class CriaConta {
 		return (min + r.nextInt((max - min) + 1));
 	}
 
-	
-	@Test
-	
-	
+	@Test	
 	
 	public void test(dados d) {
 		
@@ -109,9 +110,6 @@ public class CriaConta {
 			break;
 		}
 		navegador.findElement(By.xpath("/html/body/div[1]/section/main/div/div/div[1]/div/div[6]/button")).click(); // Clica para cadastrar e espera a chegada código (sms)
-
-		
-		
 		
 		
 		// ------- pega o código de verificação (sms)
@@ -198,7 +196,7 @@ public class CriaConta {
 		String userdir = System.getProperty("user.dir");
 		FileOutputStream arquivo = new FileOutputStream(userdir+"\\senhas.txt", true);
 		//FileWriter fw = new FileWriter("../Dados/dados.txt/");
-				
+		
 		PrintWriter pw = new PrintWriter(arquivo);
 		pw.println(user);
 		pw.println(d.getSenha());
@@ -207,7 +205,123 @@ public class CriaConta {
 		//-----------------
 
 		//navegador.close();
-		JOptionPane.showMessageDialog(null, "Conta criada com sucesso!");		
+		//navegador.close();
+		//
+		Class<ChromeDriver> driverClass1 = ChromeDriver.class;
+		WebDriverManager.getInstance(driverClass1).setup();
+		//WebDriver navegador = driverClass.newInstance();
+
+
+		Map<String, String> mobileEmulation = new HashMap<>();
+		mobileEmulation.put("deviceName", "Galaxy S5");
+
+		ChromeOptions options = new ChromeOptions();
+		options.setExperimentalOption("mobileEmulation", mobileEmulation);
+		ChromeDriver navegador1 = new ChromeDriver(options);
+		//
+		navegador1.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
+		
+		navegador1.get("https://www.instagram.com/accounts/login/?source=auth_switcher");
+		//----login
+		navegador1.findElement(By.name("username")).sendKeys(user);
+		navegador1.findElement(By.name("password")).sendKeys(d.getSenha());
+		
+		navegador1.findElement(By.xpath("/html/body/div[1]/section/main/div[1]/div/div/div/form/div[1]/div[6]/button")).click();
+		WebDriverWait wait1 = new WebDriverWait(navegador1, 60);
+		wait1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(("/html/body/div[1]/section/main/div/div/div/button")))); //Espera o botão agora não aparecer
+
+		navegador1.findElement(By.xpath("/html/body/div[1]/section/main/div/div/div/button")).click();
+		
+		wait1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(("/html/body/div[4]/div/div/div/div[3]/button[2]"))));//Espera abrir outra tela para cancelar
+		navegador1.findElement(By.xpath("/html/body/div[4]/div/div/div/div[3]/button[2]")).click();//Clica no botão cancelar
+
+		
+		navegador1.findElement(By.xpath("/html/body/div[1]/section/nav[2]/div/div/div[2]/div/div/div[5]/a/span/img")).click(); //Clica no botão para ir para o perfil
+		wait1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(("/html/body/div[1]/section/main/div/header/div/div/div/button/img"))));//Espera aparecer a opção de por a foto de perfil
+
+		
+		//Adicionar foto de perfil
+		navegador1.findElement(By.xpath("/html/body/div[1]/section/main/div/header/div/div/div/button/img")).click();
+
+		Robot rob = new Robot();
+		rob.setAutoDelay(500);
+		
+		StringSelection stringSelection = new StringSelection(d.getPasta()+"\\"+d.getPasta_fotos()+"\\perfil.jpg");
+		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+		
+		rob.setAutoDelay(300);
+		
+		rob.keyPress(KeyEvent.VK_CONTROL);
+		rob.keyPress(KeyEvent.VK_V);
+		
+		rob.keyRelease(KeyEvent.VK_CONTROL);
+		rob.keyRelease(KeyEvent.VK_V);
+		
+		rob.keyPress(KeyEvent.VK_ENTER);
+		rob.keyRelease(KeyEvent.VK_ENTER);
+		
+		wait1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(("/html/body/div[1]/section/div[1]/header/div/div[2]/button"))));
+		navegador1.findElement(By.xpath("/html/body/div[1]/section/div[1]/header/div/div[2]/button")).click(); //Poe a foto de perfil
+		
+		wait1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(("/html/body/div[4]/div/div/div/div[2]/button[1]"))));
+		navegador1.findElement(By.xpath("/html/body/div[4]/div/div/div/div[2]/button[1]")).click(); //Publica a foto de perfil
+		wait1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(("/html/body/div[4]/div/div/div/div[3]/button[2]"))));
+		navegador1.findElement(By.xpath("/html/body/div[4]/div/div/div/div[3]/button[2]")).click(); // Agora não
+		
+		//Foto 1
+		navegador1.findElement(By.cssSelector("#react-root > section > nav.NXc7H.f11OC > div > div > div.KGiwt > div > div > div.q02Nz._0TPg > svg")).click();
+		rob.setAutoDelay(500);
+		
+		StringSelection stringSelection1 = new StringSelection(d.getPasta()+"\\"+d.getPasta_fotos()+"\\1.jpg");
+		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection1, null);
+		
+		rob.setAutoDelay(300);
+		
+		rob.keyPress(KeyEvent.VK_CONTROL);
+		rob.keyPress(KeyEvent.VK_V);
+		
+		rob.keyRelease(KeyEvent.VK_CONTROL);
+		rob.keyRelease(KeyEvent.VK_V);
+		
+		rob.keyPress(KeyEvent.VK_ENTER);
+		rob.keyRelease(KeyEvent.VK_ENTER);
+		
+		wait1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(("/html/body/div[1]/section/div[1]/header/div/div[2]/button"))));
+		navegador1.findElement(By.xpath("/html/body/div[1]/section/div[1]/header/div/div[2]/button")).click();
+		wait1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(("/html/body/div[1]/section/div[2]/section[2]/button/span[1]"))));
+		navegador1.findElement(By.xpath("/html/body/div[1]/section/div[1]/header/div/div[2]/button")).click();
+		
+		//Foto 2
+		for (int i=2; i<=9; i++) {
+			wait1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(("/html/body/div[3]/div/div/div/p"))));
+			navegador1.findElement(By.cssSelector("#react-root > section > nav.NXc7H.f11OC > div > div > div.KGiwt > div > div > div.q02Nz._0TPg > svg")).click();
+			rob.setAutoDelay(500);
+			
+			StringSelection stringSelection2 = new StringSelection(d.getPasta()+"\\"+d.getPasta_fotos()+"\\"+i+".jpg");
+			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection2, null);
+			
+			rob.setAutoDelay(300);
+			
+			rob.keyPress(KeyEvent.VK_CONTROL);
+			rob.keyPress(KeyEvent.VK_V);
+			
+			rob.keyRelease(KeyEvent.VK_CONTROL);
+			rob.keyRelease(KeyEvent.VK_V);
+			
+			rob.keyPress(KeyEvent.VK_ENTER);
+			rob.keyRelease(KeyEvent.VK_ENTER);
+			
+			wait1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(("/html/body/div[1]/section/div[1]/header/div/div[2]/button"))));
+			navegador1.findElement(By.xpath("/html/body/div[1]/section/div[1]/header/div/div[2]/button")).click();
+			wait1.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(("/html/body/div[1]/section/div[2]/section[2]/button/span[1]"))));
+			navegador1.findElement(By.xpath("/html/body/div[1]/section/div[1]/header/div/div[2]/button")).click();
+		}
+
+		//navegador.close();
+		
+		JOptionPane.showMessageDialog(null,
+				"Deu tudo certo! Conta criada com sucesso!");
+
 		
 		}catch(Exception e ){
 			e.printStackTrace();
